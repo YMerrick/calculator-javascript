@@ -1,8 +1,60 @@
 * {
     padding: 0;
     margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
 }
 
 body {
+    min-height: 100%;
     display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.display {
+    height: 65px;
+    width: 100%;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    padding: 6px;
+}
+
+.calculator-container {
+    display: flex;
+    flex-direction: column;
+    height: 300px;
+    width: 200px;
+    outline: solid black 1px;
+}
+
+.button-container {
+    display: flex;
+    flex: 1;
+}
+
+.left-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1 0 auto;
+}
+
+.left-buttons > button {
+    flex: 1 0 33%;
+}
+
+.right-buttons {
+    display: flex;
+    flex-flow: column;
+    align-items: stretch;
+    flex: 1 0 auto;
+}
+
+.right-buttons > button {
+    flex: 1 0 auto;
 }
