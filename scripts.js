@@ -4,8 +4,6 @@ let secondNum = null;
 
 let displayValue = '';
 
-const display = document.querySelector(".display span");
-
 const numbers = document.querySelector(".left-buttons");
 
 numbers.addEventListener("click", (event) => {
@@ -15,16 +13,16 @@ numbers.addEventListener("click", (event) => {
 
     switch (number.id) {
         case 'clear':
-            clearDisplay();
+            resetCalc();
             break;
     
         case 'decimal':
             if (checkDecimal()) break;
-            appendDisplay(number.textContent);
+            updateDisplay(number.textContent);
             break;
 
         default:
-            appendDisplay(number.textContent);
+            updateDisplay(number.textContent);
             break;
     }
     
@@ -36,24 +34,64 @@ operation.addEventListener("click", (event) => {
     if (symbol.nodeName === 'DIV') return
 
     operator = symbol.textContent;
+    updateStorage(document.querySelector(".display span").textContent, 1);
+    clearDisplay();
 });
 
-function checkDecimal () {
-    if (display.textContent.split('').includes('.')) return true
+const calculate = document.querySelector("#equals");
+calculate.addEventListener("click", () => {
+
+    if (firstNum === null) firstNum = 0;
+    if (operator === '') operator = '+';
+
+    updateStorage(document.querySelector(".display span").textContent, 2);
+
+    let answer = operate(firstNum,secondNum,operator)
+
+    if (checkDecimal(answer)) answer = Number(answer.toPrecision(14));
+    
+    setDisplay(String(answer));
+
+});
+
+function updateStorage (value, selector = null) {
+    if (selector === 1) firstNum = Number(value);
+    else secondNum = Number(value);
+}
+
+function checkDecimal (value = null) {
+    let number;
+    if (value !== null) {number = String(value)}
+    else {number = document.querySelector(".display span").textContent};
+    if (number.split('').includes('.')) return true
     return false;
 }
 
-function appendDisplay(value) {
+function setDisplay(value) {
+    const display = document.querySelector(".display span");
+    display.textContent = value;
+}
+
+function updateDisplay(value) {
+    const display = document.querySelector(".display span");
     if (display.textContent.length === 1 && display.textContent === '0' && value !== '.') display.textContent = ''; 
     if (display.textContent.length < 14) display.textContent += value;
 }
 
+function resetCalc() {
+    clearDisplay();
+    clearStorage();
+}
 
-function clearDisplay() {
-    display.textContent = '';
+function clearStorage() {
     firstNum = null;
     secondNum = null;
     operator = '';
+}
+
+function clearDisplay() {
+    const display = document.querySelector(".display span");
+    display.textContent = '0';
 }
 
 function add(a,b) {
@@ -77,19 +115,15 @@ function operate(first, second, operator) {
     switch (operator) {
         case '+':
             return add(first,second);
-            break;
     
-        case '-':
+        case '−':
             return subtract(first,second);
-            break;
 
-        case '*':
+        case '×':
             return multiply(first,second);
-            break;
         
-        case '/':
+        case '÷':
             return divide(first,second);
-            break;
 
         default:
             break;
