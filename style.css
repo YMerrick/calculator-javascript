@@ -29,8 +29,12 @@ body {
     display: flex;
     flex-direction: column;
     height: 300px;
-    width: 200px;
+    width: 250px;
     outline: solid black 1px;
+}
+
+#equals {
+    flex: 1 0 auto;
 }
 
 .button-container {
