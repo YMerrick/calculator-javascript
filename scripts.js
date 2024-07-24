@@ -4,55 +4,92 @@ let secondNum = null;
 
 let displayValue = '';
 
-const numbers = document.querySelector(".left-buttons");
+let newNumberFlag = false;
 
-numbers.addEventListener("click", (event) => {
-    const number = event.target;
+const buttons = document.querySelector(".button-container").addEventListener("click", (event) => {
+    const parent = event.target.parentElement.className;
+    console.log(parent)
+    if (parent === 'button-container') return
+    switch (parent) {
+        case 'left-buttons':
+            //number or clear button pressed pass event to function to deal with it
+            numberPressed(event.target);
+            break;
+        
+        case 'right-buttons':
+            //operator button chosen call function to deal with it
+            operatorPressed(event.target);
+            break;
+    
+        default:
+            //equal button pressed call function to handle with that
+            equalsPressed();
+            break;
+    }
+});
 
-    if (number.nodeName === 'DIV') return
+function numberPressed(node) {
 
-    switch (number.id) {
+    if (node.nodeName === 'DIV') return
+
+    if (newNumberFlag) {
+        clearDisplay();
+        newNumberFlag = false;
+    }
+
+    switch (node.id) {
         case 'clear':
             resetCalc();
             break;
     
         case 'decimal':
             if (checkDecimal()) break;
-            updateDisplay(number.textContent);
+            updateDisplay(node.textContent);
             break;
 
         default:
-            updateDisplay(number.textContent);
+            updateDisplay(node.textContent);
+            firstNum !== null && operator !== '' ? updateStorage(document.querySelector(".display span").textContent, 2):
+                updateStorage(document.querySelector(".display span").textContent, 1);
             break;
     }
     
-});
+}
 
-const operation = document.querySelector(".right-buttons");
-operation.addEventListener("click", (event) => {
-    const symbol = event.target
-    if (symbol.nodeName === 'DIV') return
+function operatorPressed(node) {
 
-    operator = symbol.textContent;
-    updateStorage(document.querySelector(".display span").textContent, 1);
-    clearDisplay();
-});
+    if (node.nodeName === 'DIV') return
 
-const calculate = document.querySelector("#equals");
-calculate.addEventListener("click", () => {
+    newNumberFlag = true;
 
-    if (firstNum === null) firstNum = 0;
-    if (operator === '') operator = '+';
+    if (secondNum !== null) {
+        equalsPressed();
+    }
+    
+    secondNum = null;
 
-    updateStorage(document.querySelector(".display span").textContent, 2);
+    operator = node.textContent;
+}
 
+function equalsPressed() {
+
+    if (firstNum === null || secondNum === null) return
+    if (operator === '') return
+
+    let answer = calculateAns();
+
+    updateStorage(answer, 1);
+}
+
+function calculateAns() {
     let answer = operate(firstNum,secondNum,operator)
 
     if (checkDecimal(answer)) answer = Number(answer.toPrecision(14));
     
     setDisplay(String(answer));
-
-});
+    if (answer === 'ERROR') answer = 0;
+    return answer;
+}
 
 function updateStorage (value, selector = null) {
     if (selector === 1) firstNum = Number(value);
@@ -126,6 +163,7 @@ function operate(first, second, operator) {
             return divide(first,second);
 
         default:
+            console.log(`There is no operator`);
             break;
     }
 }
