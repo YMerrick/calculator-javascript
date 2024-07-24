@@ -12,17 +12,14 @@ const buttons = document.querySelector(".button-container").addEventListener("cl
     if (parent === 'button-container') return
     switch (parent) {
         case 'left-buttons':
-            //number or clear button pressed pass event to function to deal with it
             numberPressed(event.target);
             break;
         
         case 'right-buttons':
-            //operator button chosen call function to deal with it
             operatorPressed(event.target);
             break;
     
         default:
-            //equal button pressed call function to handle with that
             equalsPressed();
             break;
     }
@@ -60,12 +57,13 @@ function operatorPressed(node) {
 
     if (node.nodeName === 'DIV') return
 
-    newNumberFlag = true;
+    
 
-    if (secondNum !== null) {
+    if (secondNum !== null && !newNumberFlag) {
         equalsPressed();
     }
     
+    newNumberFlag = true;
     secondNum = null;
 
     operator = node.textContent;
@@ -79,6 +77,7 @@ function equalsPressed() {
     let answer = calculateAns();
 
     updateStorage(answer, 1);
+    newNumberFlag = true;
 }
 
 function calculateAns() {
