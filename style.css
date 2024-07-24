@@ -14,27 +14,61 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: grey;
 }
 
 .display {
     height: 65px;
-    width: 100%;
     display: flex;
     justify-content: right;
     align-items: center;
-    padding: 6px;
+    padding: 4px;
+    background-color: rgb(231, 231, 231);
+    margin-bottom: 0;
+    align-self: stretch;
+    border: solid rgb(27, 27, 27) 1px;
+    border-bottom: solid rgb(27, 27, 27) 10px;
+}
+
+.display > span {
+    font-size: 36px;
 }
 
 .calculator-container {
     display: flex;
     flex-direction: column;
-    height: 300px;
-    width: 250px;
-    outline: solid black 1px;
+    height: 400px;
+    width: 350px;
+    outline: solid rgb(27, 27, 27) 10px;
+    background-color: black;
+}
+
+button {
+    font-size: 22px;
+    font-weight: 700;
+    border: none;
+    border-radius: 7px;
+    margin: 2px;
+}
+
+.equals {
+    display:flex;
+}
+
+#equals,.equals {
+    flex: 1 0 auto;
 }
 
 #equals {
-    flex: 1 0 auto;
+    background-color: orange;
+}
+
+#equals:hover {
+    background-color: rgb(235, 152, 0);
+}
+
+#equals:active {
+    background-color: rgb(216, 140, 0);
 }
 
 .button-container {
@@ -49,7 +83,17 @@ body {
 }
 
 .left-buttons > button {
-    flex: 1 0 33%;
+    flex: 1 0 31%;
+    font-size: 16px;
+    background-color: rgb(50, 207, 255);
+}
+
+.left-buttons > button:hover {
+    background-color: rgb(45, 186, 230);
+}
+
+.left-buttons > button:active {
+    background-color: rgb(41, 167, 206);
 }
 
 .right-buttons {
@@ -61,4 +105,25 @@ body {
 
 .right-buttons > button {
     flex: 1 0 auto;
+    background-color: rgb(255, 208, 0);
+}
+
+.right-buttons > button:hover {
+    background-color: rgb(235, 192, 0);
+}
+
+.right-buttons > button:active {
+    background-color: rgb(216, 169, 0);
+}
+
+#clear {
+    background-color: rgb(255, 81, 0);
+}
+
+#clear:hover {
+    background-color: rgb(235, 74, 0);
+}
+
+#clear:active {
+    background-color: rgb(215, 68, 0);
 }
