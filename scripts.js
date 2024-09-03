@@ -6,6 +6,10 @@ let displayValue = '';
 
 let newNumberFlag = false;
 
+    // Todo: 
+    // Fix overflow when Exponents
+    // Use realtime colors
+
 const buttons = document.querySelector(".button-container").addEventListener("click", (event) => {
     const parent = event.target.parentElement.className;
     console.log(parent)
